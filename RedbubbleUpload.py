@@ -7,8 +7,8 @@ import time
 import openpyxl
 import glob
 import os
-# import trygui3
-# from trygui3 import UI
+import trygui3
+
 
 #setting webdriver and removing *Chrome is being controlled by automated test software* infobar
 options = webdriver.ChromeOptions()
@@ -24,8 +24,13 @@ driver.get("https://www.redbubble.com/auth/login")
 
 def getdir():
     #this function reads the image address from getdir.txt and passes it to strmani
-    with open("getdir.txt", "r") as f1:
-        string_mani(f1.read())
+    # with open("getdir.txt", "r") as f1:
+    #     string_mani(f1.read())
+    wbook = openpyxl.load_workbook(r"getuserdatatry.xlsx")
+    objx = wbook['datax']
+    strdir = objx.cell(2,1).value
+    string_mani(strdir)
+
 
 
 def string_mani(str):
@@ -119,8 +124,6 @@ def getnumofimages(folder):
         # check if current path is a file
         if os.path.isfile(os.path.join(src_folder, path)):
             len += 1
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    print(list_File)
     getdata(len, list_File)
 
 def getdata(count, listF):
@@ -128,7 +131,10 @@ def getdata(count, listF):
     #it sends one image and the row corresponding to that image.
     #it keeps sending till all the images are done
     #OpenPyxl ki workbook
-    wb = openpyxl.load_workbook(r"C:\Users\salil\Desktop\RedbubbleData1.xlsx")
+    wbook = openpyxl.load_workbook(r"getuserdatatry.xlsx")
+    objx = wbook['datax']
+    strxl = objx.cell(2,2).value
+    wb = openpyxl.load_workbook(strxl)
     #Workbook ki sheet ka obj
     obj1 = wb['RedbubbleData']
     #Get max rows in excelsheet
@@ -141,6 +147,7 @@ def getdata(count, listF):
                 navi(list_Fi[picnum],row,obj1)
 
 if __name__ == '__main__':
+    trygui3()
     performSignIn()
     getdir()
     time.sleep(10)
