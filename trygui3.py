@@ -2,6 +2,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QFil
 from PyQt5 import uic
 import sys
 import os
+from openpyxl import load_workbook
+import RedbubbleUpload
+
+wb = load_workbook("getuserdatatry.xlsx")
+obj = wb['datax']
 
 
 class UI(QMainWindow):
@@ -26,21 +31,33 @@ class UI(QMainWindow):
     def imgclicker(self):
         # self.label.setText("FInally")
         #Open file dialog. Returns a tuple
-        fname = QFileDialog.getOpenFileName(self, "Open File", "", "All files (*);;PNG Files (*.png);;JPG Files(*.jpg)")
+        fname = QFileDialog.getOpenFileName(self, "Open File", "", "PNG Files (*.png);;JPG Files(*.jpg)")
 
         #output filename to screen
 
         if fname:
             self.labelIm.setText(str(fname))
-            with open("getdir.txt", "w") as f1:
-                f1.write(str(fname[0]))
+            a2 = obj['A2']
+            a2.value = str(fname[0])
+            wb.save("getuserdatatry.xlsx")
+
+               
+            # with open("getdir.txt", "w") as f1:
+            #     f1.write(str(fname[0]))
 
     def xlclicker(self):
+        pass
         xname = QFileDialog.getOpenFileName(self, "Open File", "", "Excel Files (*.xlsx))")
-        print(xname)
+        b2 = obj['B2']
+        b2.value = xname[0]
+        wb.save("getuserdatatry.xlsx")
+        
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     win = UI()
     win.show()
+   
     sys.exit(app.exec())
+    RedbubbleUpload.performSignIn()
+    
