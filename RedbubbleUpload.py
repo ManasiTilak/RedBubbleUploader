@@ -19,17 +19,27 @@ driver_path = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(executable_path=driver_path, chrome_options=options)
 #set driver
 driver.get("https://www.redbubble.com/auth/login")
-#OpenPyxl ki workbook
-wb = openpyxl.load_workbook(r"C:\Users\salil\Desktop\RedbubbleData1.xlsx")
-#Workbook ki sheet ka obj
-obj1 = wb['RedbubbleData']
-#Get max rows in excelsheet
-row = obj1.max_row
-#Setting main folder and image pattern
-src_folder = r"C:\Users\salil\Desktop\RedbubbleProgTry"
-pattern = "\*.png"
-#Set dir to an array of sort containing files with pattern : .png
-list_File = glob.glob(src_folder+pattern)
+
+
+
+def getdir():
+    #this function reads the image address from getdir.txt and passes it to strmani
+    with open("getdir.txt", "r") as f1:
+        string_mani(f1.read())
+
+
+def string_mani(str):
+    originalString = str
+    replacedString = originalString.replace('/', '\\')
+    reversedString = replacedString[::-1]
+    slashpos = reversedString.find('\\')
+    appendString = reversedString[slashpos+1:]
+    finalString = appendString [::-1]
+    print(f'final string>>>>>>is >>>>>{finalString}')
+    # #Setting main folder and image pattern
+    src_folder = finalString
+    getnumofimages(src_folder)
+
 
 def performSignIn():
     #sending username
@@ -43,7 +53,7 @@ def performSignIn():
     time.sleep(10)
 
 
-def navi(f, j):
+def navi(f, j,obj):
 #function being called, it's filling in image and row specific data in the given form
     driver.get("https://www.redbubble.com/portfolio/images/new")
     driver.find_element(By.CLASS_NAME, "copy-icon").click()
@@ -67,17 +77,17 @@ def navi(f, j):
     # Title
     title = driver.find_element(By.ID, "work_title_en")
     title.clear()
-    tit = obj1.cell(j, 1).value
+    tit = obj.cell(j, 1).value
     title.send_keys(tit)
     #Tags
     tagss = driver.find_element(By.ID, "work_tag_field_en")
     tagss.clear()
-    tg = obj1.cell(j, 2).value
+    tg = obj.cell(j, 2).value
     tagss.send_keys(tg)
     #description
     desc = driver.find_element(By.ID, "work_description_en")
     desc.clear()
-    des = obj1.cell(j, 3).value
+    des = obj.cell(j, 3).value
     desc.send_keys(des)
     #image
     img = driver.find_element(By.ID, "select-image-base")
@@ -94,27 +104,45 @@ def navi(f, j):
     wait = WebDriverWait(driver, 50)
     wait.until(EC.url_contains(urlpattern))
 
-def getnumofimages():
+def getnumofimages(folder):
     #Getting total number of images in the dir
+    src_folder = folder
     len = 0
+
+    # Set dir to an array of sort containing files with pattern : .png
+    pattern = "\*.png"
+    # Setting Glob
+    list_File = glob.glob(src_folder+pattern)
+
     # Iterate directory
     for path in os.listdir(src_folder):
         # check if current path is a file
         if os.path.isfile(os.path.join(src_folder, path)):
             len += 1
-    getdata(len)
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print(list_File)
+    getdata(len, list_File)
 
-def getdata(count):
+def getdata(count, listF):
     #this sends data to func navi
     #it sends one image and the row corresponding to that image.
     #it keeps sending till all the images are done
+    #OpenPyxl ki workbook
+    wb = openpyxl.load_workbook(r"C:\Users\salil\Desktop\RedbubbleData1.xlsx")
+    #Workbook ki sheet ka obj
+    obj1 = wb['RedbubbleData']
+    #Get max rows in excelsheet
+    row = obj1.max_row
+    
+    list_Fi = listF
     for row in range(2, row + 1):
         for picnum in range(0, count):
             if (row - 2) is picnum:
-                navi(list_File[picnum],row)
+                navi(list_Fi[picnum],row,obj1)
 
 if __name__ == '__main__':
     performSignIn()
-    getnumofimages()
+    getdir()
     time.sleep(10)
     driver.quit()
+    getdir()
