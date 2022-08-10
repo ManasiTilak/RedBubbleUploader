@@ -34,11 +34,7 @@ class UserInfoUI(QMainWindow):
         #Next button goes to the next window and hides the main
         self.GotoNext.clicked.connect(self.opennextwin)
 
-    def opennextwin(self):
-        self.nextwin.show()
-        self.hide()
-        
-
+    
     def saveinfonav(self):
         #Getting username
         userusername = self.usernm.text()
@@ -53,6 +49,10 @@ class UserInfoUI(QMainWindow):
         userobj['B1'].value = str(userpassword)
         
         userdata.save("./res/StoreuserData.xlsx")
+    
+    def opennextwin(self):
+        self.nextwin.show()
+        self.hide()
 
         
 
@@ -91,7 +91,8 @@ class UI(QMainWindow):
 
     def imgclicker(self):
         #Open file dialog. Returns a tuple
-        fname = QFileDialog.getOpenFileName(self, "Open File", "", "PNG Files (*.png);;JPG Files(*.jpg)")
+        #we always have to pass self, what does the browse file says title mein,
+        fname = QFileDialog.getOpenFileName(self, "Open File", "c:\\", "PNG Files (*.png);;JPG Files(*.jpg)")
 
         #output filename to screen and save to application data:
 
@@ -100,6 +101,8 @@ class UI(QMainWindow):
             a2 = obj['A2']
             a2.value = str(fname[0])
             wb.save("./res/getuserdatatry.xlsx")
+        else:
+            print("please upload file")
 
 
     def xlclicker(self):
@@ -111,6 +114,8 @@ class UI(QMainWindow):
             b2 = obj['B2']
             b2.value = xname[0]
             wb.save("./res/getuserdatatry.xlsx")
+        else:
+            print("Please upload file")
 
 
 
