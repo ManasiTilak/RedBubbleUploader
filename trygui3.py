@@ -27,8 +27,17 @@ class UserInfoUI(QMainWindow):
         self.nextwin = UI()
         
         # define what happens when buttons are clicked
+
+        ##Updating user info by clicking update button
         self.UpdateUser.clicked.connect(self.saveinfonav)
-        self.GotoNext.clicked.connect(self.nextwin.show)
+
+        #Next button goes to the next window and hides the main
+        self.GotoNext.clicked.connect(self.opennextwin)
+
+    def opennextwin(self):
+        self.nextwin.show()
+        self.hide()
+        
 
     def saveinfonav(self):
         #Getting username
@@ -46,13 +55,6 @@ class UserInfoUI(QMainWindow):
         userdata.save("StoreuserData.xlsx")
 
         
-
-
-class DialogWin(QDialog):
-    def __init__(self):
-        super(DialogWin, self).__init__()
-        #loading the DialogGUI Window
-        uic.loadUi("endscreen.ui", self)
 
 class UI(QMainWindow):
 
@@ -79,13 +81,13 @@ class UI(QMainWindow):
 
         # if self.labelIm.text is "Uploaded Image Folder" and self.labelXl.text is "Uploaded Excel File":
             
-        #     print("label image is open")
-        self.doneButton.clicked.connect(self.newDialog.show)
-        # else:
-        #     self.doneButton.clicked.connect(self.datawarning)
-                
-    # def datawarning(self):
-        # print("warning")
+        #navigating to the next window
+        #and hiding the main window
+        self.doneButton.clicked.connect(self.opennewdialog)
+
+    def opennewdialog(self):
+        self.newDialog.show()
+        self.hide()
 
     def imgclicker(self):
         #Open file dialog. Returns a tuple
@@ -110,6 +112,14 @@ class UI(QMainWindow):
             b2.value = xname[0]
             wb.save("getuserdatatry.xlsx")
 
+
+
+
+class DialogWin(QDialog):
+    def __init__(self):
+        super(DialogWin, self).__init__()
+        #loading the DialogGUI Window
+        uic.loadUi("endscreen.ui", self)
 
 def main():
     app = QApplication(sys.argv)
