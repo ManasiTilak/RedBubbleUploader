@@ -7,7 +7,7 @@ import time
 import openpyxl
 import glob
 import os
-import trygui3
+
 
 
 #setting webdriver and removing *Chrome is being controlled by automated test software* infobar
@@ -17,10 +17,29 @@ options.add_experimental_option("excludeSwitches",["enable-automation"])
 
 driver_path = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(executable_path=driver_path, chrome_options=options)
-#set driver
-driver.get("https://www.redbubble.com/auth/login")
 
 
+
+def driverset():
+    #set driver
+    driver.get("https://www.redbubble.com/auth/login")
+
+def performSignIn():
+    #getting data from excel file
+    userbook = openpyxl.load_workbook(r"StoreuserData.xlsx")
+    objuser = userbook['Sheet1']
+    usernameinp = objuser.cell(1,1).value
+    passwinp = objuser.cell(1,2).value
+
+    #sending username
+    username = driver.find_element(By.ID, "ReduxFormInput1")
+    username.send_keys(usernameinp)
+
+    #sending password
+    passwd = driver.find_element(By.ID, "ReduxFormInput2")
+    passwd.send_keys(passwinp)
+    passwd.send_keys(Keys.RETURN)
+    time.sleep(10)
 
 def getdir():
     #this function reads the image address from getdir.txt and passes it to strmani
@@ -30,8 +49,6 @@ def getdir():
     objx = wbook['datax']
     strdir = objx.cell(2,1).value
     string_mani(strdir)
-
-
 
 def string_mani(str):
     originalString = str
@@ -44,19 +61,6 @@ def string_mani(str):
     # #Setting main folder and image pattern
     src_folder = finalString
     getnumofimages(src_folder)
-
-
-def performSignIn():
-    #sending username
-    username = driver.find_element(By.ID, "ReduxFormInput1")
-    username.send_keys("manasitilak12@gmail.com")
-
-    #sending password
-    passwd = driver.find_element(By.ID, "ReduxFormInput2")
-    passwd.send_keys("Sana2020")
-    passwd.send_keys(Keys.RETURN)
-    time.sleep(10)
-
 
 def navi(f, j,obj):
 #function being called, it's filling in image and row specific data in the given form
@@ -136,6 +140,9 @@ def getdata(count, listF):
     strxl = objx.cell(2,2).value
     wb = openpyxl.load_workbook(strxl)
     #Workbook ki sheet ka obj
+    #########################
+    ###########IMP ASK USER TO CALL THE SHEET THIS##
+    ########################################
     obj1 = wb['RedbubbleData']
     #Get max rows in excelsheet
     row = obj1.max_row
@@ -146,10 +153,13 @@ def getdata(count, listF):
             if (row - 2) is picnum:
                 navi(list_Fi[picnum],row,obj1)
 
+    
+
 if __name__ == '__main__':
-    trygui3()
+    driverset()  
     performSignIn()
     getdir()
     time.sleep(10)
     driver.quit()
     getdir()
+   
