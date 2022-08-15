@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
+    <width>471</width>
     <height>590</height>
    </rect>
   </property>
@@ -24,8 +24,8 @@ border: 1px dashed #76797C;
    <widget class="QPushButton" name="BrowseImg">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>200</y>
+      <x>320</x>
+      <y>140</y>
       <width>111</width>
       <height>41</height>
      </rect>
@@ -78,9 +78,9 @@ QPushButton:pressed
    <widget class="QLabel" name="imagFolder">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>160</y>
-      <width>281</width>
+      <x>50</x>
+      <y>140</y>
+      <width>391</width>
       <height>31</height>
      </rect>
     </property>
@@ -104,6 +104,12 @@ QPushButton:pressed
     </property>
     <property name="text">
      <string>Select Image Folder</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="excelFile">
@@ -140,8 +146,8 @@ QPushButton:pressed
    <widget class="QPushButton" name="browseIxl">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>330</y>
+      <x>320</x>
+      <y>280</y>
       <width>111</width>
       <height>41</height>
      </rect>
@@ -191,6 +197,70 @@ QPushButton:pressed
      <string>BROWSE</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="doneBtn">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>410</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+    background-color: #1e1e1e;
+    selection-background-color: #1e1e1e;
+    selection-color: black;
+    padding: 5px;
+    border-style: hidden;
+	 border: 1px groove #76797C;
+   
+    border-radius: 2px;
+    color: #eff0f1;
+}
+
+QPushButton:disabled
+{
+    background-color: #323232;
+    border-width: 1px;
+    border-color: #454545;
+    border-style: solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+    color: #454545;
+}
+
+QPushButton:focus {
+    background-color: #D1DBCB;
+    color: black;
+}
+
+QPushButton:pressed
+{
+    color: black;
+    background-color: #D1DBCB;
+    padding-top: -15px;
+    padding-bottom: -17px;
+}</string>
+    </property>
+    <property name="text">
+     <string>DONE</string>
+    </property>
+   </widget>
+   <zorder>imagFolder</zorder>
+   <zorder>BrowseImg</zorder>
+   <zorder>excelFile</zorder>
+   <zorder>browseIxl</zorder>
+   <zorder>doneBtn</zorder>
   </widget>
  </widget>
  <resources/>

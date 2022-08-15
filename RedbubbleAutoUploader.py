@@ -26,7 +26,7 @@ def driverset():
 
 def performSignIn():
     #getting data from excel file
-    userbook = openpyxl.load_workbook(r"StoreuserData.xlsx")
+    userbook = openpyxl.load_workbook(r"./res/StoreuserData.xlsx")
     objuser = userbook['Sheet1']
     usernameinp = objuser.cell(1,1).value
     passwinp = objuser.cell(1,2).value
@@ -45,7 +45,7 @@ def getdir():
     #this function reads the image address from getdir.txt and passes it to strmani
     # with open("getdir.txt", "r") as f1:
     #     string_mani(f1.read())
-    wbook = openpyxl.load_workbook(r"getuserdatatry.xlsx")
+    wbook = openpyxl.load_workbook(r"./res/getuserdatatry.xlsx")
     objx = wbook['datax']
     strdir = objx.cell(2,1).value
     string_mani(strdir)
@@ -135,7 +135,7 @@ def getdata(count, listF):
     #it sends one image and the row corresponding to that image.
     #it keeps sending till all the images are done
     #OpenPyxl ki workbook
-    wbook = openpyxl.load_workbook(r"getuserdatatry.xlsx")
+    wbook = openpyxl.load_workbook(r"./res/getuserdatatry.xlsx")
     objx = wbook['datax']
     strxl = objx.cell(2,2).value
     wb = openpyxl.load_workbook(strxl)
@@ -145,21 +145,22 @@ def getdata(count, listF):
     ########################################
     obj1 = wb['RedbubbleData']
     #Get max rows in excelsheet
-    row = obj1.max_row
+    max_row = obj1.max_row
     
     list_Fi = listF
-    for row in range(2, row + 1):
+    for row in range(1, max_row+1):
         for picnum in range(0, count):
-            if (row - 2) is picnum:
+            if (row-1) is picnum:
                 navi(list_Fi[picnum],row,obj1)
 
     
 
 if __name__ == '__main__':
+    
     driverset()  
     performSignIn()
     getdir()
     time.sleep(10)
     driver.quit()
-    getdir()
+
    

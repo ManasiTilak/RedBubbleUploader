@@ -104,6 +104,11 @@ border: 1px dashed #76797C;
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton
 {
@@ -176,6 +181,65 @@ QPushButton:pressed
     </property>
     <property name="text">
      <string>USERNAME</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="updateinfo">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>440</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+    background-color: #1e1e1e;
+    selection-background-color: #1e1e1e;
+    selection-color: black;
+    padding: 5px;
+    border-style: hidden;
+	 border: 1px groove #76797C;
+   
+    border-radius: 2px;
+    color: #eff0f1;
+}
+
+QPushButton:disabled
+{
+    background-color: #323232;
+    border-width: 1px;
+    border-color: #454545;
+    border-style: solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+    color: #454545;
+}
+
+QPushButton:focus {
+    background-color: #D1DBCB;
+    color: black;
+}
+
+QPushButton:pressed
+{
+    color: black;
+    background-color: #D1DBCB;
+    padding-top: -15px;
+    padding-bottom: -17px;
+}</string>
+    </property>
+    <property name="text">
+     <string>UPDATE</string>
     </property>
    </widget>
   </widget>
